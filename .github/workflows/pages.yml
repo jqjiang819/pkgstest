@@ -1,0 +1,31 @@
+name: PagesTest
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build for ${{ matrix.release }}(${{ matrix.arch }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        release:
+          - 23.05.2
+        arch:
+          - x86_64
+          - mips_24kc
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: mkdir public && echo build > public/${{ matrix.release }}_${{ matrix.arch }}.html
+
+      - name: Publish Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: public-${{ matrix.release }}_${{ matrix.arch }}
+          path: public/*
