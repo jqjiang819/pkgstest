@@ -27,7 +27,7 @@ jobs:
       - name: Publish Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.release }}-${{ matrix.arch }}
+          name: ${{ matrix.release }}/${{ matrix.arch }}
           path: public/*
 
   deploy:
@@ -37,6 +37,6 @@ jobs:
 
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
       - name: Log
         run: tree
